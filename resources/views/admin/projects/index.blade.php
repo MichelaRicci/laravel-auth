@@ -5,6 +5,9 @@
 @section('content')
 <section id="projects">
     <div class="container py-4">
+        <div class="text-center my-4">
+            <a href="{{ route('admin.projects.create') }}" class="btn btn-success">Crea nuovo progetto</a>
+        </div>
         <div class="d-flex flex-wrap">
             @foreach ($projects as $project)
                 <div class="col-6 my-3" style="height: 400px;">
