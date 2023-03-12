@@ -14,7 +14,7 @@
                     <a href="{{ route('admin.projects.show', $project['id']) }}" style="text-decoration: none; color:black">
                         <div class="card d-flex flex-column-reverse align-items-center justify-content-between mb-3">                     
                             <figure class="text-center">
-                                <img src="{{ $project->image }}" alt="{{ $project->title }}">
+                                <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}">
                             </figure>
                             <div class="text-center">
                                 <h1>Project {{ $project->title }}</h1>

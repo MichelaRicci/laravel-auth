@@ -3,7 +3,7 @@
 @section('title', 'Create')
     
 @section('content')        
-    <form action="{{ route('admin.projects.store', $project->id) }}" method="POST">
+    <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row row-cols-3">
             <div class= "m-3">
@@ -12,7 +12,7 @@
             </div>
             <div class= "col d-flex m-3">
             <label for="price">Content</label>
-            <input class="ms-2" type="text"  id="content" name="content" placeholder="Write a description of this project"/>
+            <input class="ms-2" type="text"  id="content" name="content" placeholder="Write a description of this project" required/>
             </div>
             <div class= "col d-flex m-3">
                 <label for="series">Link github</label>

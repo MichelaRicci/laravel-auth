@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
+
 
 
 class ProjectController extends Controller
@@ -24,7 +28,7 @@ class ProjectController extends Controller
      */
     public function create(Project $project)
     {
-        return view('admin.projects.create', compact('project'));
+        return view('admin.projects.create');
     }
 
     /**
@@ -32,9 +36,16 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        //
+        $data = $request->all();
+        $project = new Project();
 
+        $data['slug'] = Str::slug($data['title'], '-');
+        $project->fill($data);
+
+        $project->save();
+        return to_route('admin.projects.show', $project->id);
     }
-
     /**
      * Display the specified resource.
      */
@@ -55,9 +66,19 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Project $project)
     {
-        //
+        $data = $request->all();
+        $data['slug'] = Str::slug($data['title'], '-');
+
+        if (Arr::exists($data, 'image')) {
+            if ($project->image) Storage::delete($project->image);
+            $img_url = Storage::put('projects', $data['image']);
+            $data['image'] = $img_url;
+        }
+
+        $project->update($data);
+        return to_route('admin.projects.show', $project->id);
     }
 
     /**
